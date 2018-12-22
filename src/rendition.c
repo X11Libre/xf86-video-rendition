@@ -480,7 +480,7 @@ renditionPreInit(ScrnInfoPtr pScreenInfo, int flags)
     MessageType       From;
     int               videoRam, Rounding, nModes = 0;
     renditionPtr      pRendition;
-    char             *in_string;
+    const char       *in_string;
     vgaHWPtr          pvgaHW;
     
 #ifdef DEBUG
