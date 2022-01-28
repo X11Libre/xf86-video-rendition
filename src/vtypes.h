@@ -152,8 +152,8 @@ struct verite_board_t {
 
     Bool hwcursor_used;     /* Is HW-cursor used? */
     vu16 hwcursor_vmemsize; /* How much videomem does it use */
-    vu32 hwcursor_membase;  /* videomem adress for V2K-cursor */
-                            /* Has to be on 1024-byte boundry */
+    vu32 hwcursor_membase;  /* videomem address for V2K-cursor */
+                            /* Has to be on 1024-byte boundary */
 
     vu32 fbOffset;          /* Currently busy fb-memory marker */
     Bool overclock_mem;     /* Memory overclock ? */

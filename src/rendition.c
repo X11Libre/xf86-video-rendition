@@ -80,7 +80,7 @@
 /*
  * Constants for the (theoretical) maximum width and height that can
  * be used to display data on the CRT.  These were calculated from 
- * the HORZ and VERT macors, respectively, in vmodes.c.
+ * the HORZ and VERT macros, respectively, in vmodes.c.
  */
 static const int MAX_HDISPLAY = 2048;
 static const int MAX_VDISPLAY = 2048;
@@ -88,7 +88,7 @@ static const int MAX_VDISPLAY = 2048;
 /*
  * Constants for the (theoretical) maximum line length of a scan line
  * and scan lines per screen (including overdraw).  These were 
- * calculated from the HORZ and VERT macors, respectively, in vmodes.c.
+ * calculated from the HORZ and VERT macros, respectively, in vmodes.c.
  */
 static const int MAX_HTOTAL   = 2880;
 static const int MAX_VTOTAL   = 2184;
@@ -683,7 +683,7 @@ renditionPreInit(ScrnInfoPtr pScreenInfo, int flags)
             renditionChipsets[
         pRendition->board.chip==V1000_DEVICE ? 0:1].name);
 
-    /* I do not get the IO base addres <ml> */
+    /* I do not get the IO base address <ml> */
     /* XXX Is this still true?  If so, the wrong base is being checked */
     xf86DrvMsg(pScreenInfo->scrnIndex, X_PROBED,
 	       "Rendition %s @ %lx/%lx\n",
@@ -1185,7 +1185,7 @@ renditionScreenInit(SCREEN_INIT_ARGS_DECL)
 	/* Initialise HW cursor */
 	if(!RenditionHWCursorInit(pScreen)){
 	    xf86DrvMsg(pScreenInfo->scrnIndex, X_ERROR,
-		       "Hardware Cursor initalization failed!!\n");
+		       "Hardware Cursor initialization failed!!\n");
 	}
     }
 

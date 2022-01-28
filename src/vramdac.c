@@ -18,7 +18,7 @@
 
 #undef DEBUG
 
-/* directly accessable RAMDAC registers */
+/* directly accessible RAMDAC registers */
 #define BT485_WRITE_ADDR        0x00
 #define BT485_RAMDAC_DATA       0x01    
 #define BT485_PIXEL_MASK        0x02
@@ -36,7 +36,7 @@
 #define BT485_CURS_Y_LOW        0x0e
 #define BT485_CURS_Y_HIGH       0x0f
 
-/* indirectly accessable ramdac registers */
+/* indirectly accessible ramdac registers */
 #define BT485_COMMAND_REG_3     0x01
 
 /* bits in command register 0 */

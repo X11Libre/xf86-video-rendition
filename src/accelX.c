@@ -153,7 +153,7 @@ RENDITIONAccelXAAInit(ScreenPtr pScreen)
     }
 
     /* Here we fill in the XAA callback names */
-    /* Sync is the only compulsary function   */
+    /* Sync is the only compulsory function   */
     pXAAinfo->Sync = RENDITIONSyncV1000;
 
     /* Here are the other functions & flags */

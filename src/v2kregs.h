@@ -9,7 +9,7 @@
 #define SCRATCH         0x70 /* 16-bit BIOS scratch space */
 
 #define MEMDIAG         0xa4 /* Memory diagnostic register #1 */
-#define CURSORBASE      0xac /* cursor base address bits [23:10] aligne to 1024 byte boundary */
+#define CURSORBASE      0xac /* cursor base address bits [23:10] aligned to 1024 byte boundary */
 
 #define PCLKPLL         0xc0 /* external device 0 */
 #define VINEVENBASE     0xd0 /* video input even field base address */

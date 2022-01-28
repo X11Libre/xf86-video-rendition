@@ -63,7 +63,7 @@ verite_initboard(ScrnInfoPtr pScreenInfo)
     verite_write_memory32(vmb, 0x7f8, 0);
     verite_write_memory32(vmb, 0x7fc, 0);
 
-    /* Run the code we just transfered to the boards memory */
+    /* Run the code we just transferred to the boards memory */
     /* ... and start accelerator */
     v1k_flushicache(pScreenInfo);
 

@@ -35,7 +35,7 @@ static void RENDITIONLoadCursorImage(ScrnInfoPtr pScreenInfo, unsigned char* src
 
 
 /*
- * This is top-level initialization funtion
+ * This is top-level initialization function
  */
 void
 RenditionHWCursorPreInit (ScrnInfoPtr pScreenInfo)
