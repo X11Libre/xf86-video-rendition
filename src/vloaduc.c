@@ -31,8 +31,13 @@
 #ifdef X_LITTLE_ENDIAN
 
 /* maybe swap word */
-#define SW32(x) lswapl(x)
-#define SW16(x) lswaps(x)
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 24
+# define SW32(x) lswapl(x)
+# define SW16(x) lswaps(x)
+#else
+# define SW32(x) bswap_32(x)
+# define SW16(x) bswap_16(x)
+#endif
 #else /* BIG_ENDIAN */
 #define SW32(x) (x)
 #define SW16(x) (x)
