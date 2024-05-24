@@ -63,10 +63,7 @@ dist_driver_DATA = \
 	v20002d.uc
 
 EXTRA_DIST = \
-        accel.h \
-        accelX.c \
 	README.uc \
 	vgafont-std.data \
 	vgafont-vrx.data \
 	vgapalette.data
-                        
