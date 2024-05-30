@@ -31,7 +31,6 @@ rendition_drv_ladir = @moduledir@/drivers
 rendition_drv_la_SOURCES = \
          cmd2d.h \
          commonregs.h \
-         compat-api.h \
          cscode.h \
          hwcursor.c \
          hwcursor.h \
