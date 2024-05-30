@@ -106,14 +106,14 @@ static Bool renditionPciProbe(DriverPtr drv, int entity_num,
 static Bool       renditionProbe(DriverPtr, int);
 #endif
 static Bool       renditionPreInit(ScrnInfoPtr, int);
-static Bool       renditionScreenInit(SCREEN_INIT_ARGS_DECL);
-static Bool       renditionSwitchMode(SWITCH_MODE_ARGS_DECL);
-static void       renditionAdjustFrame(ADJUST_FRAME_ARGS_DECL);
-static Bool       renditionEnterVT(VT_FUNC_ARGS_DECL);
-static void       renditionLeaveVT(VT_FUNC_ARGS_DECL);
-static void       renditionFreeScreen(FREE_SCREEN_ARGS_DECL);
+static Bool       renditionScreenInit(ScreenPtr pScreen, int argc, char **argv);
+static Bool       renditionSwitchMode(ScrnInfoPtr pScrn, DisplayModePtr mode);
+static void       renditionAdjustFrame(ScrnInfoPtr pScrn, int x, int y);
+static Bool       renditionEnterVT(ScrnInfoPtr pScrn);
+static void       renditionLeaveVT(ScrnInfoPtr pScrn);
+static void       renditionFreeScreen(ScrnInfoPtr pScrn);
 
-static ModeStatus renditionValidMode(SCRN_ARG_TYPE, DisplayModePtr, Bool, int);
+static ModeStatus renditionValidMode(ScrnInfoPtr, DisplayModePtr, Bool, int);
 static Bool renditionMapMem(ScrnInfoPtr pScreenInfo);
 static Bool renditionUnmapMem(ScrnInfoPtr pScreenInfo);
 #if 0
@@ -1016,7 +1016,7 @@ renditionLeaveGraphics(ScrnInfoPtr pScreenInfo)
 
 /* Unravel the screen */
 static Bool
-renditionCloseScreen(CLOSE_SCREEN_ARGS_DECL)
+renditionCloseScreen(ScreenPtr pScreen)
 {
     ScrnInfoPtr pScreenInfo = xf86ScreenToScrn(pScreen);
     renditionPtr prenditionPriv=renditionGetRec(pScreenInfo);
@@ -1038,7 +1038,7 @@ renditionCloseScreen(CLOSE_SCREEN_ARGS_DECL)
     if (prenditionPriv 
 	&& (pScreen->CloseScreen = prenditionPriv->CloseScreen)) {
         prenditionPriv->CloseScreen = NULL;
-        Closed = (*pScreen->CloseScreen)(CLOSE_SCREEN_ARGS);
+        Closed = (*pScreen->CloseScreen)(pScreen);
     }
     
 #ifdef DEBUG
@@ -1060,7 +1060,7 @@ renditionDPMSSet(ScrnInfoPtr pScreen, int mode, int flags)
 }
 
 static Bool
-renditionScreenInit(SCREEN_INIT_ARGS_DECL)
+renditionScreenInit(ScreenPtr pScreen, int argc, char **argv)
 {
     ScrnInfoPtr pScreenInfo = xf86ScreenToScrn(pScreen);
     renditionPtr pRendition = RENDITIONPTR(pScreenInfo);
@@ -1103,9 +1103,7 @@ renditionScreenInit(SCREEN_INIT_ARGS_DECL)
     /* blank the screen */
     renditionSaveScreen(pScreen, SCREEN_SAVER_ON);
 
-    (*pScreenInfo->AdjustFrame)(ADJUST_FRAME_ARGS(pScreenInfo,
-						  pScreenInfo->frameX0, pScreenInfo->frameY0));
-
+    (*pScreenInfo->AdjustFrame)(pScreenInfo, pScreenInfo->frameX0, pScreenInfo->frameY0);
 
     miClearVisualTypes();
 
@@ -1231,7 +1229,7 @@ renditionScreenInit(SCREEN_INIT_ARGS_DECL)
     pScreen->SaveScreen = renditionSaveScreen;
 
     if (!Inited)
-        renditionCloseScreen(CLOSE_SCREEN_ARGS);
+        renditionCloseScreen(pScreen);
 
     if (serverGeneration == 1)
 	xf86ShowUnusedOptions(pScreenInfo->scrnIndex, pScreenInfo->options);
@@ -1244,9 +1242,8 @@ renditionScreenInit(SCREEN_INIT_ARGS_DECL)
 }
 
 static Bool
-renditionSwitchMode(SWITCH_MODE_ARGS_DECL)
+renditionSwitchMode(ScrnInfoPtr pScreenInfo, DisplayModePtr mode)
 {
-    SCRN_INFO_PTR(arg);
 #ifdef DEBUG
     ErrorF("RENDITION: renditionSwitchMode() called\n");
 #endif
@@ -1255,9 +1252,8 @@ renditionSwitchMode(SWITCH_MODE_ARGS_DECL)
 
 
 static void
-renditionAdjustFrame(ADJUST_FRAME_ARGS_DECL)
+renditionAdjustFrame(ScrnInfoPtr pScreenInfo, int x, int y)
 {
-    SCRN_INFO_PTR(arg);
     renditionPtr pRendition = RENDITIONPTR(pScreenInfo);
     int offset, virtualwidth, bitsPerPixel;
 
@@ -1279,9 +1275,8 @@ renditionAdjustFrame(ADJUST_FRAME_ARGS_DECL)
 
 
 static Bool
-renditionEnterVT(VT_FUNC_ARGS_DECL)
+renditionEnterVT(ScrnInfoPtr pScreenInfo)
 {
-    SCRN_INFO_PTR(arg);
     vgaHWPtr pvgaHW = VGAHWPTR(pScreenInfo);
 
 #ifdef DEBUG
@@ -1298,17 +1293,15 @@ renditionEnterVT(VT_FUNC_ARGS_DECL)
     if (!renditionSetMode(pScreenInfo, pScreenInfo->currentMode))
         return FALSE;
 
-    (*pScreenInfo->AdjustFrame)(ADJUST_FRAME_ARGS(pScreenInfo,
-						  pScreenInfo->frameX0, pScreenInfo->frameY0));
+    (*pScreenInfo->AdjustFrame)(pScreenInfo, pScreenInfo->frameX0, pScreenInfo->frameY0);
 
     return TRUE;
 }
 
 
 static void
-renditionLeaveVT(VT_FUNC_ARGS_DECL)
+renditionLeaveVT(ScrnInfoPtr pScreenInfo)
 {
-    SCRN_INFO_PTR(arg);
 #ifdef DEBUG
     ErrorF("RENDITION: renditionLeaveVT() called\n");
 #endif
@@ -1317,15 +1310,14 @@ renditionLeaveVT(VT_FUNC_ARGS_DECL)
 
 
 static void
-renditionFreeScreen(FREE_SCREEN_ARGS_DECL)
+renditionFreeScreen(ScrnInfoPtr pScreenInfo)
 {
-    SCRN_INFO_PTR(arg);
     renditionFreeRec(pScreenInfo);
 }
 
 
 static ModeStatus
-renditionValidMode(SCRN_ARG_TYPE arg, DisplayModePtr pMode, Bool Verbose, 
+renditionValidMode(ScrnInfoPtr pScrn, DisplayModePtr pMode, Bool Verbose, 
 		   int flags)
 {
     if (pMode->Flags & V_INTERLACE)

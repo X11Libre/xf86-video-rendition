@@ -161,7 +161,7 @@ struct verite_board_t {
     Bool shadowfb;          /* Use ShadowFB ? */
     vu8 *shadowPtr;
     vu32 shadowPitch;
-    void (*PointerMoved)(SCRN_ARG_TYPE arg, int x, int y);
+    void (*PointerMoved)(ScrnInfoPtr pScrn, int x, int y);
 
     int rotate;             /* Rotate clockwise or counterclockwise */
 
@@ -192,7 +192,3 @@ typedef struct _renditionRec
 #define RENDITIONPTR(p)     ((renditionPtr)((p)->driverPrivate))
 
 #endif /* #ifndef _VTYPES_H_ */
-
-/*
- * end of file vtypes.h
- */

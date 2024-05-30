@@ -301,8 +301,7 @@ verite_setmode(ScrnInfoPtr pScreenInfo, struct verite_modeinfo_t *mode)
         pRendition->board.mode.virtualwidth=pRendition->board.mode.screenwidth;
 
     pRendition->board.init=1;
-    (*pScreenInfo->AdjustFrame)(ADJUST_FRAME_ARGS(pScreenInfo,
-						  pScreenInfo->frameX0, pScreenInfo->frameY0));
+    (*pScreenInfo->AdjustFrame)(pScreenInfo, pScreenInfo->frameX0, pScreenInfo->frameY0);
 
     /* Need to fix up syncs */
 

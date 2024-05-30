@@ -12,11 +12,6 @@ void renditionRefreshArea8(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 void renditionRefreshArea16(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 void renditionRefreshArea24(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 void renditionRefreshArea32(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
-void renditionPointerMoved(SCRN_ARG_TYPE arg, int x, int y);
-
+void renditionPointerMoved(ScrnInfoPtr pScrn, int x, int y);
 
 #endif 
-
-/*
- * end of file rendition_shadow.h
- */

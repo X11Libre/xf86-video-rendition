@@ -48,9 +48,8 @@ renditionRefreshArea(ScrnInfoPtr pScreenInfo, int num, BoxPtr pbox)
 } 
 
 void
-renditionPointerMoved(SCRN_ARG_TYPE arg, int x, int y)
+renditionPointerMoved(ScrnInfoPtr pScreenInfo, int x, int y)
 {
-    SCRN_INFO_PTR(arg);
     renditionPtr pRendition = RENDITIONPTR(pScreenInfo);
     int newX, newY;
 
@@ -62,7 +61,7 @@ renditionPointerMoved(SCRN_ARG_TYPE arg, int x, int y)
 	newY = pScreenInfo->pScreen->width - x - 1;
     }
 
-    (*pRendition->board.PointerMoved)(arg, newX, newY);
+    (*pRendition->board.PointerMoved)(pScreenInfo, newX, newY);
 }
 
 void
@@ -256,4 +255,3 @@ renditionRefreshArea32(ScrnInfoPtr pScreenInfo, int num, BoxPtr pbox)
 	pbox++;
     }
 }
-

@@ -48,7 +48,6 @@
 
 #include "commonregs.h"
 
-#include "compat-api.h"
 /* end of __RENDITION_H__ */
 
 #define PCI_CHIP_V1000 0x0001
