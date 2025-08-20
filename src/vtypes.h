@@ -142,7 +142,7 @@ struct verite_board_t {
 
     /* mode information */
     struct verite_modeinfo_t mode;
-    
+
     /* saved text mode settings */
     vu8 cursor_hi;
     vu8 cursor_low;
@@ -167,7 +167,7 @@ struct verite_board_t {
 
     vu8 ucode_buffer[MC_SIZE]; /* Space for microcode, when not needed */
 };
-    
+
 
 /*
  * This structure is used to wrap the screen's CloseScreen vector.

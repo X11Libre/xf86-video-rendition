@@ -16,7 +16,7 @@ void RenditionHWCursorRelease (ScrnInfoPtr pScreenInfo);
 #define HC_SIZE  (64*64*2)/8  /* 1024 */
 
 /* end of __HWCURSOR_H__ */
-#endif 
+#endif
 
 /*
  * end of file hwcursor.h

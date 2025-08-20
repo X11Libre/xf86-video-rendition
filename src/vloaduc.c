@@ -25,7 +25,7 @@
 #endif
 
 /*
- * defines 
+ * defines
  */
 
 #ifdef X_LITTLE_ENDIAN
@@ -46,7 +46,7 @@
 
 
 /*
- * local function prototypes 
+ * local function prototypes
  */
 static void loadSection2board(ScrnInfoPtr pScreenInfo, int fd,
 				Elf32_Shdr *shdr);
@@ -62,12 +62,12 @@ static void mmve(ScrnInfoPtr pScreenInfo, vu32 size, vu8 *data, vu32 phys_addr);
  * functions
  */
 
-/* 
+/*
  * int verite_load_ucfile(ScrnInfoPtr pScreenInfo, char *file_name)
  *
  * Loads verite elf file microcode file in |name| onto the board.
  * NOTE: Assumes the ucode loader is already running on the board!
- * 
+ *
  * Returns the program's entry point, on error -1;
  */
 int
@@ -83,7 +83,7 @@ verite_load_ucfile(ScrnInfoPtr pScreenInfo, char *file_name)
   Elf32_Ehdr ehdr ;
 
 #ifdef DEBUG
-  ErrorF("RENDITION: Loading microcode %s\n", file_name); 
+  ErrorF("RENDITION: Loading microcode %s\n", file_name);
 #endif
 
   /* Stop the RISC if it happends to run */
@@ -91,16 +91,16 @@ verite_load_ucfile(ScrnInfoPtr pScreenInfo, char *file_name)
 
   /* open file and read ELF-header */
   if (-1 == (fd=open(file_name, O_RDONLY, 0))) {
-    ErrorF("RENDITION: Cannot open microcode %s\n", file_name); 
+    ErrorF("RENDITION: Cannot open microcode %s\n", file_name);
     return -1;
   }
 
   if (read(fd, &ehdr, sizeof(ehdr)) != sizeof(ehdr)) {
-    ErrorF("RENDITION: Cannot read microcode header %s\n", file_name); 
+    ErrorF("RENDITION: Cannot read microcode header %s\n", file_name);
     return -1;
   }
   if (0 != strncmp((char *)&ehdr.e_ident[1], "ELF", 3)) {
-    ErrorF("RENDITION: Microcode header in %s is corrupt\n", file_name); 
+    ErrorF("RENDITION: Microcode header in %s is corrupt\n", file_name);
     return -1;
   }
 
@@ -110,7 +110,7 @@ verite_load_ucfile(ScrnInfoPtr pScreenInfo, char *file_name)
   if (0!=sz && 0!=num) {
 	orig_pphdr=pphdr=(Elf32_Phdr *)malloc(sz*num);
 	if (!pphdr) {
-	  ErrorF("RENDITION: Cannot allocate global memory (1)\n"); 
+	  ErrorF("RENDITION: Cannot allocate global memory (1)\n");
 	  close(fd);
 	  return -1;
 	}
@@ -132,7 +132,7 @@ verite_load_ucfile(ScrnInfoPtr pScreenInfo, char *file_name)
     if (0!=sz && 0!=num) {
       orig_pshdr=pshdr=(Elf32_Shdr *)malloc(sz*num);
       if (!pshdr) {
-        ErrorF("RENDITION: Cannot allocate global memory (2)\n"); 
+        ErrorF("RENDITION: Cannot allocate global memory (2)\n");
         close(fd);
         return -1;
       }
@@ -149,7 +149,7 @@ verite_load_ucfile(ScrnInfoPtr pScreenInfo, char *file_name)
 
   if (pphdr) {
     do {
-      if (SW32(pphdr->p_type) == PT_LOAD) 
+      if (SW32(pphdr->p_type) == PT_LOAD)
         loadSegment2board(pScreenInfo, fd, pphdr);
         pphdr=(Elf32_Phdr *)(((char *)pphdr)+sz);
       } while (--num);
@@ -158,8 +158,8 @@ verite_load_ucfile(ScrnInfoPtr pScreenInfo, char *file_name)
   else {
     do {
       if (SW32(pshdr->sh_size) && (SW32(pshdr->sh_flags) & SHF_ALLOC)
-          && ((SW32(pshdr->sh_type)==SHT_PROGBITS) 
-               || (SW32(pshdr->sh_type)==SHT_NOBITS))) 
+          && ((SW32(pshdr->sh_type)==SHT_PROGBITS)
+               || (SW32(pshdr->sh_type)==SHT_NOBITS)))
         loadSection2board(pScreenInfo, fd, pshdr);
 	  pshdr=(Elf32_Shdr *)(((char *)pshdr)+sz);
 	} while (--num) ;
@@ -221,7 +221,7 @@ loadSegment2board(ScrnInfoPtr pScreenInfo, int fd, Elf32_Phdr *phdr)
 
 
 static int
-seek_and_read_hdr(int fd, void *ptr, long int offset, int size, 
+seek_and_read_hdr(int fd, void *ptr, long int offset, int size,
                              int cnt)
 {
   if (lseek(fd, offset, SEEK_SET) != offset)

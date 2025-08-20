@@ -89,12 +89,12 @@ void RENDITIONSubsequentTwoPointLine(ScrnInfoPtr pScreenInfo,
  * global data
  */
 
-static int Rop2Rop[]={ 
+static int Rop2Rop[]={
     ROP_ALLBITS0, ROP_AND_SD, ROP_AND_SND,  ROP_S,
  /* GXclear,      GXand,      GXandReverse, GXcopy, */
     ROP_AND_NSD,   ROP_D,  ROP_XOR_SD, ROP_OR_SD,
  /* GXandInverted, GXnoop, GXxor,      GXor,  */
-    ROP_NOR_SD, ROP_S,   ROP_NOT_D, ROP_NOT_S,   
+    ROP_NOR_SD, ROP_S,   ROP_NOT_D, ROP_NOT_S,
  /* suppose I have some problems understanding what invert and revers means <ml>
     ROP_NOR_SD, ROP_S,   ROP_NOT_S, ROP_NOT_D,   */
  /* GXnor,      GXequiv, GXinvert,  GXorReverse, */
@@ -180,7 +180,7 @@ RENDITIONAccelXAAInit(ScreenPtr pScreen)
                 RENDITIONSubsequentSolidFillRect;
 
     /* line */
-    xf86AccelInfoRec.SubsequentTwoPointLine =  
+    xf86AccelInfoRec.SubsequentTwoPointLine =
         RENDITIONSubsequentTwoPointLine;
 #endif /* #if 0 */
 
@@ -202,7 +202,7 @@ RENDITIONAccelXAAInit(ScreenPtr pScreen)
     /*
      * Finally, we set up the video memory space available to the pixmap
      * cache. In this case, all memory from the end of the virtual screen to
-     * the end of video memory minus 64K (and any other memory which we 
+     * the end of video memory minus 64K (and any other memory which we
      * already reserved like HW-Cursor), can be used.
      */
 
@@ -233,7 +233,7 @@ RENDITIONAccelNone(ScrnInfoPtr pScreenInfo)
 {
     renditionPtr pRendition = RENDITIONPTR(pScreenInfo);
     XAAInfoRecPtr pXAAinfo=pRendition->AccelInfoRec;
-    
+
 #ifdef DEBUG
     ErrorF("RENDITION: RENDITIONAccelNone called\n");
 #endif
@@ -247,7 +247,7 @@ RENDITIONAccelNone(ScrnInfoPtr pScreenInfo)
 #if 0
     pXAAinfo->SubsequentTwoPointLine=NULL;
 #endif
-    
+
     XAADestroyInfoRec(pRendition->AccelInfoRec);
     pRendition->AccelInfoRec=NULL;
 }
@@ -277,7 +277,7 @@ RENDITIONLoadUcode(ScrnInfoPtr pScreenInfo)
     else
         RENDITIONRestoreUcode(pScreenInfo);
 
-    ErrorF ("Rendition: Ucode successfully %s\n", 
+    ErrorF ("Rendition: Ucode successfully %s\n",
 		(ucode_loaded ? "restored" : "loaded"));
 
     ucode_loaded=1;
@@ -292,7 +292,7 @@ RENDITIONInitUcode(ScrnInfoPtr pScreenInfo)
     unsigned long iob = pRendition->board.io_base;
 
     if (0 == verite_getstride(pScreenInfo, NULL,
-			 &pRendition->board.mode.stride0, 
+			 &pRendition->board.mode.stride0,
                          &pRendition->board.mode.stride1)) {
       xf86DrvMsg(pScreenInfo->scrnIndex,X_ERROR,
 		   ("Acceleration for this resolution not available\n"));
@@ -302,10 +302,10 @@ RENDITIONInitUcode(ScrnInfoPtr pScreenInfo)
     }
     else
       ErrorF ("Rendition: Stride 0: %d, stride 1: %d\n",
-	      pRendition->board.mode.stride0, 
+	      pRendition->board.mode.stride0,
 	      pRendition->board.mode.stride1);
 
-    /* NOTE: for 1152x864 only! 
+    /* NOTE: for 1152x864 only!
     stride0=6;
     stride1=1;
     */
@@ -349,7 +349,7 @@ RENDITIONInitUcode(ScrnInfoPtr pScreenInfo)
     verite_out32(iob, (pRendition->board.mode.virtualwidth)*
 	    (pRendition->board.mode.bitsperpixel>>3));
     verite_out32(iob, (pRendition->board.mode.stride1<<12)|
-	    (pRendition->board.mode.stride0<<8)); 
+	    (pRendition->board.mode.stride0<<8));
 
 #ifdef DEBUG
     ErrorF("#InitUcode(5)# FIFOIN_FREE 0x%x -- \n",verite_in8(iob+FIFOINFREE));
@@ -465,10 +465,10 @@ RENDITIONSyncV1000(ScrnInfoPtr pScreenInfo)
 
 /*       if(!(c%0xffff))ErrorF("#F1# !0x%x! -- ",verite_in8(iob+FIFOOUTVALID)); */
 
-    if (c >= 0xfffff) { 
+    if (c >= 0xfffff) {
         ErrorF("RENDITION: RISC synchronization failed (1) FIFO out == %d!\n",
 	       verite_in8(iob+FIFOOUTVALID)&0x1f);
-        return; 
+        return;
     }
 
     /* sync RISC */
@@ -483,10 +483,10 @@ RENDITIONSyncV1000(ScrnInfoPtr pScreenInfo)
 /*       if(!(c%0xffff))ErrorF("#F2# !0x%x! -- ",verite_in8(iob+FIFOOUTVALID)); */
 
 
-    if (c >= 0xfffff) { 
+    if (c >= 0xfffff) {
       ErrorF ("Rendition: RISC synchronization failed (2) FIFO out == %d!\n",
 	      verite_in8(iob+FIFOOUTVALID)&0x1f);
-        return; 
+        return;
     }
 
     /* sync pixel engine using csucode -- I suppose this is quite slow <ml> */
@@ -500,7 +500,7 @@ RENDITIONSyncV1000(ScrnInfoPtr pScreenInfo)
 
 /*      if(!(c%0xffff))ErrorF("#F3# !0x%x! -- ",verite_in8(iob+FIFOOUTVALID)); */
 
-    if (c == 0xfffff) { 
+    if (c == 0xfffff) {
         ErrorF ("Rendition: Pixel engine synchronization failed FIFO out == %d!\n",
 		verite_in8(iob+FIFOOUTVALID)&0x1f);
         return;
@@ -524,7 +524,7 @@ RENDITIONSyncV1000(ScrnInfoPtr pScreenInfo)
     verite_out32(iob, pRendition->board.mode.virtualwidth  *
 	    (pRendition->board.mode.bitsperpixel>>3));
     verite_out32(iob, (pRendition->board.mode.stride1<<12) |
-	    (pRendition->board.mode.stride0<<8)); 
+	    (pRendition->board.mode.stride0<<8));
 }
 
 
@@ -571,7 +571,7 @@ RENDITIONSubsequentScreenToScreenCopy(ScrnInfoPtr pScreenInfo,
 
     waitfifo(5);
     verite_out32(iob, CMD_SCREEN_BLT);
-    verite_out32(iob, pRendition->board.Rop); 
+    verite_out32(iob, pRendition->board.Rop);
     verite_out32(iob, P2(srcX, srcY));
     verite_out32(iob, P2(w, h));
     verite_out32(iob, P2(dstX, dstY));
@@ -583,7 +583,7 @@ RENDITIONSubsequentScreenToScreenCopy(ScrnInfoPtr pScreenInfo,
  * solid filled rectangles
  */
 void
-RENDITIONSetupForSolidFill(ScrnInfoPtr pScreenInfo, 
+RENDITIONSetupForSolidFill(ScrnInfoPtr pScreenInfo,
 				int color, int rop,
 				unsigned planemask)
 {

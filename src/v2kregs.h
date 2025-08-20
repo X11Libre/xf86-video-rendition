@@ -18,7 +18,7 @@
 #define WRITEINTR1ADDR  0xdc /* Memory write interrupt address1 */
 #define DEVICE0_V2x000  0xf0 /* external device 1 (PLL) */
 
-/* 
+/*
  * PCLKPLL/SCLKPLL register bit defn
  */
 #define PCLKPLLPMASK	0xffffe1ff
@@ -35,12 +35,12 @@
 #define DIRECTMCLKMASK	0x00800000
 
 #define VGASTDCLOCK     0x100000
-#define EXTRADIV2       0x200000 
+#define EXTRADIV2       0x200000
 
 #define PLLINCLKFREQ	14318 /* PLL input clk freq in KHz */
 
 /*
- * memory controller 
+ * memory controller
  */
 #define MCLK_BYPASSEDGEFREQ 90000 /* in KHz */
 
@@ -60,7 +60,7 @@
 #define MMIO_DMACMDPTR      0x20050
 #define MMIO_CRTCHORZ       0x20088 /* CRTC horizontal timing */
 #define MMIO_CRTCVERT       0x2008c /* CRTC vertical timing */
-#define MMIO_CRTCSTATUS	    0x2009c 
+#define MMIO_CRTCSTATUS	    0x2009c
 #define MMIO_DACRAMWRITEADR 0x200b0 /* Palette Write Index */
 #define MMIO_DACRAMDATA     0x200b1 /* Palette Data */
 #define MMIO_VINEVENBASE    0x200d0 /* video input even field base address */
@@ -147,7 +147,7 @@ typedef struct _v_mem_io {
 #define SYSSTATUS_SHIFT 0
 #define RISCSTATUS_MASK 0xf0 /* RISC->host comm r/o */
 #define RISCSTATUS_SHIFT 4
- 
+
 /* MEMENDIAN */
 #define MEMENDIAN_NO    0       /* No byte swap. */
 #define MEMENDIAN_END   1       /* Swap bytes 3<>0, 2<>1. */

@@ -69,4 +69,4 @@ EXTRA_DIST = \
 	vgafont-std.data \
 	vgafont-vrx.data \
 	vgapalette.data
-                        
+

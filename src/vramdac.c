@@ -20,7 +20,7 @@
 
 /* directly accessible RAMDAC registers */
 #define BT485_WRITE_ADDR        0x00
-#define BT485_RAMDAC_DATA       0x01    
+#define BT485_RAMDAC_DATA       0x01
 #define BT485_PIXEL_MASK        0x02
 #define BT485_READ_ADDR         0x03
 #define BT485_CURS_WR_ADDR      0x04
@@ -85,7 +85,7 @@
 #define BT485_SIZE_MASK             0x04
 
 /* special constants for the Brooktree BT485 RAMDAC */
-#define BT485_INPUT_LIMIT           110000000 
+#define BT485_INPUT_LIMIT           110000000
 
 
 
@@ -121,7 +121,7 @@ static int Cursor_size=0;
  * is turned on.
  */
 
-void 
+void
 verite_savedac (ScrnInfoPtr pScreenInfo)
 {
     renditionPtr pRendition = RENDITIONPTR(pScreenInfo);
@@ -131,11 +131,11 @@ verite_savedac (ScrnInfoPtr pScreenInfo)
     reg->daccmd0 = verite_in8(iob+BT485_COMMAND_REG_0);
     reg->daccmd1 = verite_in8(iob+BT485_COMMAND_REG_1);
     reg->daccmd2 = verite_in8(iob+BT485_COMMAND_REG_2);
-    verite_out8(iob+BT485_COMMAND_REG_0,reg->daccmd0 
-		| BT485_CR0_EXTENDED_REG_ACCESS);    
+    verite_out8(iob+BT485_COMMAND_REG_0,reg->daccmd0
+		| BT485_CR0_EXTENDED_REG_ACCESS);
     verite_out8(iob+BT485_WRITE_ADDR, BT485_COMMAND_REG_3);
     reg->daccmd3 = verite_in8(iob+BT485_STATUS_REG);
-    verite_out8(iob+BT485_COMMAND_REG_0,reg->daccmd0);    
+    verite_out8(iob+BT485_COMMAND_REG_0,reg->daccmd0);
 }
 
 
@@ -152,7 +152,7 @@ verite_restoredac (ScrnInfoPtr pScreenInfo, RenditionRegPtr reg)
     verite_out8(iob+BT485_WRITE_ADDR, BT485_COMMAND_REG_3);
     verite_out8(iob+BT485_STATUS_REG, reg->daccmd3);
     verite_out8(iob+BT485_COMMAND_REG_0, reg->daccmd0);
-    
+
 }
 
 int
@@ -259,7 +259,7 @@ verite_initdac(ScrnInfoPtr pScreenInfo, vu8 bpp, vu8 doubleclock)
  *
  * Used to enable the hardware cursor. Size indicates, whether to use no cursor
  * at all, a 32x32 or a 64x64 cursor. The type selects a two-color, three-color
- * or X-window-like cursor. Valid values are defined in vramdac.h. 
+ * or X-window-like cursor. Valid values are defined in vramdac.h.
  *
  */
 void
@@ -270,17 +270,17 @@ verite_enablecursor(ScrnInfoPtr pScreenInfo, int type, int size)
     static vu8 ctypes[]={ BT485_DISABLE_CURSOR, BT485_2_COLOR_CURSOR,
                       BT485_3_COLOR_CURSOR, BT485_X_WINDOW_CURSOR };
     static vu8 csizes[]={ BT485_32_BY_32_CURSOR, BT485_64_BY_64_CURSOR };
-  
+
     unsigned long iob=pRendition->board.io_base+RAMDACBASEADDR;
 
 #ifdef DEBUG
     ErrorF ("Rendition: Debug verite_enablecursor called type=0x%x\n",type);
 #endif
-    
+
     /* type goes to command register 2 */
-    Bt485_write_masked(iob, BT485_COMMAND_REG_2, ~BT485_CURSOR_MASK, 
+    Bt485_write_masked(iob, BT485_COMMAND_REG_2, ~BT485_CURSOR_MASK,
                       ctypes[type]);
-  
+
     /* size is in command register 3 */
     Bt485_write_cmd3_masked(iob, ~BT485_SIZE_MASK, csizes[size]);
 
@@ -346,7 +346,7 @@ verite_setcursorcolor(ScrnInfoPtr pScreenInfo, vu32 fg, vu32 bg)
     verite_out8(iob+BT485_CURS_DATA, (fg>>8) & 0xff);
     verite_out8(iob+BT485_CURS_DATA,  fg&0xff );
 
-    /* 
+    /*
      *  The V2xxx and the V1xxx with external BT485 behave differently.
      *  If we set color 2 to fg both work correctly.
      */
@@ -365,7 +365,7 @@ verite_setcursorcolor(ScrnInfoPtr pScreenInfo, vu32 fg, vu32 bg)
 
 /*
  * Oh god, this code is quite a mess ... should be re-written soon.
- * But for now I'm happy it works ;) <ml> 
+ * But for now I'm happy it works ;) <ml>
  *
  */
 void
@@ -382,7 +382,7 @@ verite_loadcursor(ScrnInfoPtr pScreenInfo, vu8 size, vu8 *cursorimage)
     ErrorF ("Rendition: Debug verite_loadcursor called\n");
 #endif
 
-    if (NULL == cursorimage) 
+    if (NULL == cursorimage)
         return;
 
     /* Following two lines added for the byte-swap fix */
@@ -410,7 +410,7 @@ verite_loadcursor(ScrnInfoPtr pScreenInfo, vu8 size, vu8 *cursorimage)
 
       /* output cursor image */
       src=cursorimage;
-      
+
       /* First plane data */
       for (c=0; c<bytes; c++)  {
         verite_out8(iob+BT485_CURS_RAM_DATA, *src);
@@ -464,7 +464,7 @@ verite_setpalette(ScrnInfoPtr pScreenInfo, int numColors, int *indices,
 
     while (1) {
         crtc_status=verite_in32(iob+CRTCSTATUS);
-        if (crtc_status & CRTCSTATUS_VERT_SYNC) 
+        if (crtc_status & CRTCSTATUS_VERT_SYNC)
             break;
     };
 

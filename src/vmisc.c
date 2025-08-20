@@ -19,7 +19,7 @@ verite_bustomem_cpy(vu8 *dst, vu8 *src, vu32 num)
 
 #ifdef DEBUG
     ErrorF ("Rendition: DEBUG verite_bustomem_cpy called\n");
-#endif  
+#endif
     for (i=0; i<num; i++)
         dst[i] = verite_read_memory8(src, i);
 }
@@ -31,7 +31,7 @@ verite_memtobus_cpy(vu8 *dst, vu8 *src, vu32 num)
 
 #ifdef DEBUG
     ErrorF ("Rendition: DEBUG verite_memtobus_cpy called\n");
-#endif  
+#endif
 
     for (i=0; i<num; i++)
         verite_write_memory8(dst, i, src[i]);

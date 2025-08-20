@@ -16,7 +16,7 @@
 #define PATH_MAX 1024
 #endif
 
-/* 
+/*
  * global data
  */
 
@@ -108,7 +108,7 @@ verite_initboard(ScrnInfoPtr pScreenInfo)
     pRendition->board.ucode_entry=c;
 
 #ifdef DEBUG
-    ErrorF("UCode_Entry == 0x%x\n",pRendition->board.ucode_entry); 
+    ErrorF("UCode_Entry == 0x%x\n",pRendition->board.ucode_entry);
 #endif
 
     /* Everything's OK */
@@ -120,7 +120,7 @@ int
 verite_resetboard(ScrnInfoPtr pScreenInfo)
 {
     renditionPtr pRendition = RENDITIONPTR(pScreenInfo);
-    vu16 iob=pRendition->board.io_base; 
+    vu16 iob=pRendition->board.io_base;
     vu8 memendian=verite_in8(iob+MEMENDIAN);
     vu32 crtcctl = verite_in32(iob+CRTCCTL);
 
@@ -167,20 +167,20 @@ verite_getmemorysize(ScrnInfoPtr pScreenInfo)
 #ifdef DEBUG
             ErrorF( "Back at the beginning\n");
 #endif
-            break;    
+            break;
         }
-        
+
         pattern^=PATTERN;
         verite_write_memory32(pRendition->board.vmem_base, offset, pattern);
-        
+
 #ifdef DEBUG
-        ErrorF( "%x <-> %x\n", (int)pattern, 
+        ErrorF( "%x <-> %x\n", (int)pattern,
                     (int)verite_read_memory32(pRendition->board.vmem_base, offset));
 #endif
 
         if (pattern != verite_read_memory32(pRendition->board.vmem_base, offset)) {
             offset-=ONEMEG;
-            break;    
+            break;
         }
         verite_write_memory32(pRendition->board.vmem_base, offset, pattern^PATTERN);
     }
@@ -188,7 +188,7 @@ verite_getmemorysize(ScrnInfoPtr pScreenInfo)
 
     if (16*ONEMEG <= offset)
         pRendition->board.mem_size=4*ONEMEG;
-    else 
+    else
 	    pRendition->board.mem_size=offset;
 
     /* restore default byte swapping */

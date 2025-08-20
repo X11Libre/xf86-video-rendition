@@ -183,7 +183,7 @@ v1k_stop(ScrnInfoPtr pScreenInfo)
 	xf86DrvMsg(pScreenInfo->scrnIndex, X_ERROR,
 		   ("Status timeout (2)\n"));
     }
-  }   
+  }
   else {
     /* V1000 stop */
     verite_out8(io_base+DEBUGREG, debugreg|HOLDRISC);
@@ -196,10 +196,10 @@ v1k_stop(ScrnInfoPtr pScreenInfo)
 
 
 
-/* 
+/*
  * void v1k_flushicache(ScrnInfoPtr pScreenInfo)
  *
- * Returns with Icache on, also flushes Pixel engine line buffers 
+ * Returns with Icache on, also flushes Pixel engine line buffers
  * in the Dcache.
  */
 void
@@ -231,7 +231,7 @@ v1k_flushicache(ScrnInfoPtr pScreenInfo)
   risc_forcestep(io_base, NOP_INSTR);                  /* clear hazard */
   risc_forcestep(io_base, NOP_INSTR);
   risc_forcestep(io_base, NOP_INSTR);
-    
+
   /* flush ICache */
   for (c=0; c<ICACHESIZE*2; c+=ICACHELINESIZE)
     risc_forcestep(io_base, JMP_INSTR(JMP_OP, c>>2)); /* jmp NextCacheLine. */
@@ -270,12 +270,12 @@ v1k_softreset(ScrnInfoPtr pScreenInfo)
 
   /* turn icache on */
   risc_forcestep(io_base, LI_INSTR(LI_OP, RISC_RA, ICACHE_ONOFF_MASK&0xffff));
-  risc_forcestep(io_base, INT_INSTR(ADDIFI_OP, RISC_FLAG, RISC_RA, 
+  risc_forcestep(io_base, INT_INSTR(ADDIFI_OP, RISC_FLAG, RISC_RA,
                                     ICACHE_ONOFF_MASK>>16));
   /* clear any interrupts */
   verite_out8(io_base+INTR, 0xff);
   /* byte swap mode=word */
-  verite_out8(io_base+MEMENDIAN, MEMENDIAN_NO);	
+  verite_out8(io_base+MEMENDIAN, MEMENDIAN_NO);
 }
 
 
@@ -299,7 +299,7 @@ v1k_getriscprocs(verite_board_desc *boardDesc)
  * local functions
  */
 
-/* 
+/*
  * static void verite_iopoll(unsigned long port, vu32 data, vu32 mask)
  *
  * Loop on IO read until expected data is read or VERITE_MAX_POLLS is reached.
@@ -319,7 +319,7 @@ verite_iopoll(unsigned long port, vu32 data, vu32 mask)
 
 
 
-/* 
+/*
  * static void verite_iopoll8(unsigned long port, vu8 data, vu8 mask)
  *
  * Loop on IO read until expected data is read or VERITE_MAX_POLLS is reached.
@@ -349,7 +349,7 @@ readRF(unsigned long io_base, vu8 index)
 {
   vu32 data, instr;
   vu8 debug, stateindex;
-    
+
   debug=verite_in8(io_base+DEBUGREG);
   stateindex=verite_in8(io_base+STATEINDEX);
 
@@ -368,10 +368,10 @@ readRF(unsigned long io_base, vu8 index)
   verite_out8(io_base+STATEINDEX, STATEINDEX_S1);  /* point at RISCS1 */
   verite_iopoll(io_base+STATEINDEX, 0, 0);         /* short pause */
   data=verite_in32(io_base+STATEDATA);             /* read RF */
-    
+
   verite_out8(io_base+STATEINDEX, stateindex);     /* restore state_index */
   verite_out8(io_base+DEBUGREG, debug);            /* restore debug */
-    
+
   return data;
 }
 
@@ -408,7 +408,7 @@ writeRF(unsigned long io_base, vu8 index, vu32 data)
 	/* move data to special register */
 	risc_forcestep(io_base, INT_INSTR(ADD_OP, special, 0, RISC_SP));
 	/* clear hazard */
-    risc_forcestep(io_base, NOP_INSTR);	
+    risc_forcestep(io_base, NOP_INSTR);
 	risc_forcestep(io_base, NOP_INSTR);
 	risc_forcestep(io_base, NOP_INSTR);
   }
@@ -429,7 +429,7 @@ risc_readmem(unsigned long io_base, vu32 addr, vu8 read_type)
   writeRF(io_base, RISC_RA, addr);          /* point to memory */
   if (READ_BYTE == read_type)               /* read memory */
 	risc_forcestep(io_base, LD_INSTR(LB_OP, RISC_SP, 0, RISC_RA));
-  else 
+  else
     if (READ_SHORT == read_type)
 	  risc_forcestep(io_base, LD_INSTR(LH_OP, RISC_SP, 0, RISC_RA));
     else
@@ -439,7 +439,7 @@ risc_readmem(unsigned long io_base, vu32 addr, vu8 read_type)
   risc_forcestep(io_base, NOP_INSTR);      /* need nop's */
   data=readRF(io_base, RISC_SP);           /* get data */
 
-  return data; 
+  return data;
 }
 
 
@@ -456,7 +456,7 @@ risc_writemem(unsigned long io_base, vu32 addr, vu32 data, vu8 write_type)
   writeRF(io_base, RISC_FP, data);          /* set data */
   if (WRITE_BYTE == write_type)             /* write memory */
     risc_forcestep(io_base, STR_INSTR(SB_OP, 0, RISC_FP, RISC_RA));
-  else 
+  else
     if (WRITE_SHORT == write_type)
       risc_forcestep(io_base, STR_INSTR(SH_OP, 0, RISC_FP, RISC_RA));
     else
@@ -477,11 +477,11 @@ risc_step(unsigned long io_base, vu32 count)
   vu8 debugreg;
 
   /* RISC is already held; just single step it */
-    
+
   for (c=0; c<count; c++) {
     debugreg=verite_in8(io_base+DEBUGREG);
-    verite_out8(io_base+DEBUGREG, debugreg|STEPRISC); 
-    
+    verite_out8(io_base+DEBUGREG, debugreg|STEPRISC);
+
     for (d=0; d<1000; d++)
       if(0 == (verite_in8(io_base+DEBUGREG)&STEPRISC))
 		break;
@@ -503,8 +503,8 @@ risc_forcestep(unsigned long io_base, vu32 instruction)
 {
   vu32 c;
   vu8 debugreg, stateindex;
-    
-    
+
+
   debugreg=verite_in8(io_base+DEBUGREG);
   stateindex=verite_in8(io_base+STATEINDEX);
   verite_out8(io_base+STATEINDEX, STATEINDEX_IR);
@@ -513,7 +513,7 @@ risc_forcestep(unsigned long io_base, vu32 instruction)
   verite_iopoll(io_base+STATEDATA, instruction, 0xffffffff);  /* wait */
   verite_out8(io_base+DEBUGREG, debugreg|HOLDRISC|STEPRISC);  /* step */
   verite_iopoll(io_base+STATEDATA, 0, 0);                     /* short pause */
-    
+
   for (c=0; c<VERITE_MAX_POLLS; c++)
     if (HOLDRISC == (verite_in8(io_base+DEBUGREG) & (HOLDRISC|STEPRISC)))
       break;
@@ -527,7 +527,7 @@ risc_forcestep(unsigned long io_base, vu32 instruction)
 /*
  * static void risc_continue(unsigned long io_base)
  *
- * Turn off hold bit.    
+ * Turn off hold bit.
  */
 static void
 risc_continue(unsigned long io_base)
