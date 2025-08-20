@@ -13,7 +13,7 @@
 #include "hwcursor.h"
 
 /*
- * defines 
+ * defines
  */
 
 #undef DEBUG
@@ -99,7 +99,7 @@ RenditionHWCursorInit(ScreenPtr pScreen)
 #endif
 
     infoPtr->Flags = HARDWARE_CURSOR_BIT_ORDER_MSBFIRST  |
-	HARDWARE_CURSOR_TRUECOLOR_AT_8BPP   | 
+	HARDWARE_CURSOR_TRUECOLOR_AT_8BPP   |
 	HARDWARE_CURSOR_AND_SOURCE_WITH_MASK|
 	HARDWARE_CURSOR_SOURCE_MASK_INTERLEAVE_8;
 
@@ -144,7 +144,7 @@ RENDITIONShowCursor(ScrnInfoPtr pScreenInfo)
     verite_enablecursor(pScreenInfo, VERITE_3COLORS,
 #ifdef BIGCURSOR
         VERITE_CURSOR64
-#else 
+#else
         VERITE_CURSOR32
 #endif
         );
@@ -197,9 +197,9 @@ RENDITIONLoadCursorImage(ScrnInfoPtr pScreenInfo, unsigned char* src)
 #endif
     verite_loadcursor(pScreenInfo,
 #ifdef BIGCURSOR
-        VERITE_CURSOR64, 
+        VERITE_CURSOR64,
 #else
-        VERITE_CURSOR32, 
+        VERITE_CURSOR32,
 #endif
         (vu8 *)src);
 }

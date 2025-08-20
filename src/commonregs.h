@@ -53,7 +53,7 @@
 #define SYSSTATUS_SHIFT 0
 #define RISCSTATUS_MASK 0xf0 /* RISC->host comm r/o */
 #define RISCSTATUS_SHIFT 4
- 
+
 /* MEMENDIAN */
 #define MEMENDIAN_NO    0       /* No byte swap. */
 #define MEMENDIAN_END   1       /* Swap bytes 3<>0, 2<>1. */

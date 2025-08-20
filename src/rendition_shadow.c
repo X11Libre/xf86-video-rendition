@@ -23,15 +23,15 @@ renditionRefreshArea(ScrnInfoPtr pScreenInfo, int num, BoxPtr pbox)
     renditionPtr pRendition = RENDITIONPTR(pScreenInfo);
     int width, height, Bpp, FBPitch;
     unsigned char *src, *dst;
-   
+
     Bpp = pScreenInfo->bitsPerPixel >> 3;
-    FBPitch = BitmapBytePad(pScreenInfo->displayWidth * 
+    FBPitch = BitmapBytePad(pScreenInfo->displayWidth *
 			    pScreenInfo->bitsPerPixel);
 
     while(num--) {
 	width = (pbox->x2 - pbox->x1) * Bpp;
 	height = pbox->y2 - pbox->y1;
-	src = pRendition->board.shadowPtr + 
+	src = pRendition->board.shadowPtr +
 	      (pbox->y1 * pRendition->board.shadowPitch) + (pbox->x1 * Bpp);
 
 	dst = pRendition->board.vmem_base+pRendition->board.fbOffset +
@@ -42,10 +42,10 @@ renditionRefreshArea(ScrnInfoPtr pScreenInfo, int num, BoxPtr pbox)
 	    dst += FBPitch;
 	    src += pRendition->board.shadowPitch;
 	}
-	
+
 	pbox++;
     }
-} 
+}
 
 void
 renditionPointerMoved(ScrnInfoPtr pScreenInfo, int x, int y)
@@ -96,8 +96,8 @@ renditionRefreshArea8(ScrnInfoPtr pScreenInfo, int num, BoxPtr pbox)
 	    dst = (CARD32*)dstPtr;
 	    count = height;
 	    while(count--) {
-		*(dst++) = src[0] | (src[srcPitch] << 8) | 
-					(src[srcPitch * 2] << 16) | 
+		*(dst++) = src[0] | (src[srcPitch] << 8) |
+					(src[srcPitch * 2] << 16) |
 					(src[srcPitch * 3] << 24);
 		src += srcPitch * 4;
 	    }
@@ -107,7 +107,7 @@ renditionRefreshArea8(ScrnInfoPtr pScreenInfo, int num, BoxPtr pbox)
 
 	pbox++;
     }
-} 
+}
 
 
 void
@@ -131,13 +131,13 @@ renditionRefreshArea16(ScrnInfoPtr pScreenInfo, int num, BoxPtr pbox)
 	    dstPtr = (CARD16*)(pRendition->board.vmem_base+
 	                      pRendition->board.fbOffset) +
 			(pbox->x1 * dstPitch) + pScreenInfo->virtualX - y2;
-	    srcPtr = (CARD16*)pRendition->board.shadowPtr + 
+	    srcPtr = (CARD16*)pRendition->board.shadowPtr +
 			((1 - y2) * srcPitch) + pbox->x1;
 	} else {
 	    dstPtr = (CARD16*)(pRendition->board.vmem_base+
-			       pRendition->board.fbOffset) + 
+			       pRendition->board.fbOffset) +
 			((pScreenInfo->virtualY - pbox->x2) * dstPitch) + y1;
-	    srcPtr = (CARD16*)pRendition->board.shadowPtr + 
+	    srcPtr = (CARD16*)pRendition->board.shadowPtr +
 			(y1 * srcPitch) + pbox->x2 - 1;
 	}
 
@@ -194,18 +194,18 @@ renditionRefreshArea24(ScrnInfoPtr pScreenInfo, int num, BoxPtr pbox)
 	    count = height;
 	    while(count--) {
 		dst[0] = src[0] | (src[1] << 8) | (src[2] << 16) |
-				(src[srcPitch] << 24);		
+				(src[srcPitch] << 24);
 		dst[1] = src[srcPitch + 1] | (src[srcPitch + 2] << 8) |
 				(src[srcPitch * 2] << 16) |
-				(src[(srcPitch * 2) + 1] << 24);		
+				(src[(srcPitch * 2) + 1] << 24);
 		dst[2] = src[(srcPitch * 2) + 2] | (src[srcPitch * 3] << 8) |
 				(src[(srcPitch * 3) + 1] << 16) |
-				(src[(srcPitch * 3) + 2] << 24);	
+				(src[(srcPitch * 3) + 2] << 24);
 		dst += 3;
 		src += srcPitch * 4;
 	    }
 	    srcPtr += pRendition->board.rotate * 3;
-	    dstPtr += dstPitch; 
+	    dstPtr += dstPitch;
 	}
 
 	pbox++;
@@ -230,13 +230,13 @@ renditionRefreshArea32(ScrnInfoPtr pScreenInfo, int num, BoxPtr pbox)
 	    dstPtr = (CARD32*)(pRendition->board.vmem_base+
 			       pRendition->board.fbOffset) +
 		     (pbox->x1 * dstPitch) + pScreenInfo->virtualX - pbox->y2;
-	    srcPtr = (CARD32*)pRendition->board.shadowPtr + 
+	    srcPtr = (CARD32*)pRendition->board.shadowPtr +
 		     ((1 - pbox->y2) * srcPitch) + pbox->x1;
 	} else {
 	    dstPtr = (CARD32*)(pRendition->board.vmem_base+
-			       pRendition->board.fbOffset) + 
+			       pRendition->board.fbOffset) +
 		     ((pScreenInfo->virtualY - pbox->x2) * dstPitch) + pbox->y1;
-	    srcPtr = (CARD32*)pRendition->board.shadowPtr + 
+	    srcPtr = (CARD32*)pRendition->board.shadowPtr +
 		     (pbox->y1 * srcPitch) + pbox->x2 - 1;
 	}
 

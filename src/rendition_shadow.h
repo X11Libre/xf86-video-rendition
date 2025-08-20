@@ -14,4 +14,4 @@ void renditionRefreshArea24(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 void renditionRefreshArea32(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 void renditionPointerMoved(ScrnInfoPtr pScrn, int x, int y);
 
-#endif 
+#endif
