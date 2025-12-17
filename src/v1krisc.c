@@ -1,14 +1,4 @@
-/*
- *
- */
-
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-
-/*
- * includes
- */
 
 #include "rendition.h"
 #include "v1krisc.h"

@@ -32,14 +32,7 @@
  * Marc Langenbach <mlangen@studcs.uni-sb.de>
  * Additions, updates and bugfixes by Dejan Ilic <dejan.ilic@home.se>
  */
-
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-
-/*
- * includes
- */
 
 #include "rendition.h"
 #include "rendition_options.h"

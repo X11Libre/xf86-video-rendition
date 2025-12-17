@@ -4,10 +4,7 @@
  * The functions used by ShadowFB
  * Based on code written by Mark Vojkovich <markv@valinux.com>
  */
-
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include "rendition.h"
 #include "vtypes.h"

@@ -1,8 +1,5 @@
 /* Misc routines used elsewhere in driver */
-
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include "rendition.h"
 #include "vtypes.h"
