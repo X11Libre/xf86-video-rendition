@@ -184,8 +184,6 @@ _X_EXPORT DriverRec RENDITION={
 #endif
 };
 
-#ifdef XFree86LOADER
-
 /* Module loader interface */
 
 static MODULESETUPPROTO(renditionSetup);
@@ -223,9 +221,6 @@ renditionSetup(pointer Module, pointer Options, int *ErrorMajor,
 
     return NULL;
 }
-
-#endif
-
 
 /*
  * functions
