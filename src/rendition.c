@@ -180,8 +180,8 @@ static XF86ModuleVersionInfo renditionVersionRec = {
 _X_EXPORT XF86ModuleData renditionModuleData =
                { &renditionVersionRec, renditionSetup, NULL };
 
-static pointer
-renditionSetup(pointer Module, pointer Options, int *ErrorMajor,
+static void*
+renditionSetup(void *Module, void *Options, int *ErrorMajor,
                int *ErrorMinor)
 {
     static Bool Initialised = FALSE;
@@ -189,7 +189,7 @@ renditionSetup(pointer Module, pointer Options, int *ErrorMajor,
     if (!Initialised) {
         Initialised = TRUE;
         xf86AddDriver(&RENDITION, Module, 1);
-        return (pointer) TRUE;
+        return (void*) TRUE;
     }
 
     if (ErrorMajor)
