@@ -23,7 +23,7 @@
 # -avoid-version prevents gratuitous .0.0.0 version numbers on the end
 # _ladir passes a dummy rpath to libtool so the thing will actually link
 # TODO: -nostdlib/-Bstatic/-lgcc platform magic, not installing the .a, etc.
-AM_CFLAGS = $(BASE_CFLAGS) $(XORG_CFLAGS) -DMODULEDIR=\"@moduledir@\"
+AM_CFLAGS = $(BASE_CFLAGS) $(XORG_CFLAGS)
 rendition_drv_la_LTLIBRARIES = rendition_drv.la
 rendition_drv_la_LDFLAGS = -module -avoid-version
 rendition_drv_ladir = @moduledir@/drivers
@@ -31,7 +31,6 @@ rendition_drv_ladir = @moduledir@/drivers
 rendition_drv_la_SOURCES = \
          cmd2d.h \
          commonregs.h \
-         cscode.h \
          hwcursor.c \
          hwcursor.h \
          rendition.c \
@@ -45,8 +44,6 @@ rendition_drv_la_SOURCES = \
          v2kregs.h \
          vboard.c \
          vboard.h \
-         vloaduc.c \
-         vloaduc.h \
          vmisc.c \
          vmisc.h \
          vmodes.c \
@@ -56,13 +53,7 @@ rendition_drv_la_SOURCES = \
          vramdac.h \
          vtypes.h
 
-driverdir = @moduledir@
-dist_driver_DATA = \
-	v10002d.uc		\
-	v20002d.uc
-
 EXTRA_DIST = \
-	README.uc \
 	vgafont-std.data \
 	vgafont-vrx.data \
 	vgapalette.data

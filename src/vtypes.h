@@ -20,9 +20,6 @@
 #define V1000_DEVICE            0x0001
 #define V2000_DEVICE            0x2000
 
-/* Size of microcode */
-#define MC_SIZE                 0x10000
-
 
 #define XSERVER
 
@@ -130,9 +127,6 @@ struct verite_board_t {
     Bool init;
 
     /* */
-    vu32 csucode_base;
-    vu32 ucode_base;
-    vu32 ucode_entry;
     vu32 cursor_base;
 
     int Rop;
@@ -162,8 +156,6 @@ struct verite_board_t {
     void (*PointerMoved)(ScrnInfoPtr pScrn, int x, int y);
 
     int rotate;             /* Rotate clockwise or counterclockwise */
-
-    vu8 ucode_buffer[MC_SIZE]; /* Space for microcode, when not needed */
 };
 
 
