@@ -22,10 +22,6 @@
  * function prototypes
  */
 
-void v1k_start(ScrnInfoPtr pScreenInfo, vu32 pc);
-void v1k_continue(ScrnInfoPtr pScreenInfo);
-void v1k_stop(ScrnInfoPtr pScreenInfo);
-void v1k_flushicache(ScrnInfoPtr pScreenInfo);
 void v1k_softreset(ScrnInfoPtr pScreenInfo);
 
 
