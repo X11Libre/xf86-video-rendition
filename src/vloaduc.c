@@ -145,9 +145,9 @@ verite_load_ucfile(ScrnInfoPtr pScreenInfo, char *file_name)
     do {
       if (SW32(pphdr->p_type) == PT_LOAD)
         loadSegment2board(pScreenInfo, fd, pphdr);
-        pphdr=(Elf32_Phdr *)(((char *)pphdr)+sz);
-      } while (--num);
-      free(orig_pphdr);
+      pphdr=(Elf32_Phdr *)(((char *)pphdr)+sz);
+    } while (--num);
+    free(orig_pphdr);
   }
   else {
     do {
@@ -155,9 +155,9 @@ verite_load_ucfile(ScrnInfoPtr pScreenInfo, char *file_name)
           && ((SW32(pshdr->sh_type)==SHT_PROGBITS)
                || (SW32(pshdr->sh_type)==SHT_NOBITS)))
         loadSection2board(pScreenInfo, fd, pshdr);
-	  pshdr=(Elf32_Shdr *)(((char *)pshdr)+sz);
-	} while (--num) ;
-	free(orig_pshdr);
+      pshdr=(Elf32_Shdr *)(((char *)pshdr)+sz);
+    } while (--num) ;
+    free(orig_pshdr);
   }
   close(fd);
 
