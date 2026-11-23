@@ -206,7 +206,9 @@ verite_check_csucode(ScrnInfoPtr pScreenInfo)
   vu32 offset;
   int c;
   int memend;
+#ifdef DEBUG
   int mismatches=0;
+#endif
 
   memend=verite_in8(iob+MEMENDIAN);
   verite_out8(iob+MEMENDIAN, MEMENDIAN_NO);
@@ -229,7 +231,9 @@ verite_check_csucode(ScrnInfoPtr pScreenInfo)
 	     c,
 	     (unsigned long)verite_read_memory32(vmb, offset),
 	     (unsigned long)csrisc[c]);
+#ifdef DEBUG
       mismatches++;
+#endif
     }
 #ifdef DEBUG
   ErrorF("Encountered %d out of %d possible mismatches\n",
