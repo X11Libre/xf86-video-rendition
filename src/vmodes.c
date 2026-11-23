@@ -213,7 +213,7 @@ verite_setmode(ScrnInfoPtr pScreenInfo, struct verite_modeinfo_t *mode)
 
     int tmp;
     int doubleclock=0;
-    int M, N, P;
+    int M = 0, N = 0, P = 0;  /* always set by the *CalcClock() search */
     int iob=pRendition->board.io_base;
 
 #ifdef DEBUG

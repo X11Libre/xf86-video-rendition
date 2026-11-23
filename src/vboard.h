@@ -20,11 +20,8 @@
  * function prototypes
  */
 
-int verite_initboard(ScrnInfoPtr pScreenInfo);
 int verite_resetboard(ScrnInfoPtr pScreenInfo);
 int verite_getmemorysize(ScrnInfoPtr pScreenInfo);
-
-void verite_check_csucode(ScrnInfoPtr pScreenInfo);
 
 
 #endif /* __VBOARD_H__ */

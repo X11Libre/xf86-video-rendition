@@ -67,9 +67,6 @@ PKG_CHECK_MODULES(XORG, [xorg-server >= 25.0.0 xproto fontsproto $REQUIRED_MODUL
 PKG_CHECK_MODULES([PCIACCESS], [pciaccess >= 0.8.0])
 XORG_CFLAGS="$XORG_CFLAGS $PCIACCESS_CFLAGS"
 
-# Checks for header files.
-AC_CHECK_HEADERS([elf.h] [elf_abi.h])
-
 AC_SUBST([moduledir])
 
 AC_CONFIG_FILES([Makefile src/Makefile man/Makefile])
