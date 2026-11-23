@@ -62,6 +62,7 @@
 #define RENDITION_VERSION_MAJOR   PACKAGE_VERSION_MAJOR
 #define RENDITION_VERSION_MINOR   PACKAGE_VERSION_MINOR
 #define RENDITION_PATCHLEVEL      PACKAGE_VERSION_PATCHLEVEL
+#define RENDITION_VERSION_SUFFIX  PACKAGE_VERSION_SUFFIX
 #define RENDITION_VERSION_CURRENT ((RENDITION_VERSION_MAJOR << 24) | \
                  (RENDITION_VERSION_MINOR << 16) | RENDITION_PATCHLEVEL)
 
@@ -179,6 +180,10 @@ static XF86ModuleVersionInfo renditionVersionRec = {
 
 _X_EXPORT XF86ModuleData renditionModuleData =
                { &renditionVersionRec, renditionSetup, NULL };
+
+#ifdef XF86_MODULE_VERSION_SUFFIX
+XF86_MODULE_VERSION_SUFFIX(rendition, RENDITION_VERSION_SUFFIX);
+#endif
 
 static void*
 renditionSetup(void *Module, void *Options, int *ErrorMajor,
