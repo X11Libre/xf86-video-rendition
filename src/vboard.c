@@ -52,7 +52,7 @@ verite_getmemorysize(ScrnInfoPtr pScreenInfo)
     verite_write_memory32(pRendition->board.vmem_base, 0, START);
     for (offset=ONEMEG; offset<16*ONEMEG; offset+=ONEMEG) {
 #ifdef DEBUG
-        ErrorF( "Testing %d MB: ", offset/ONEMEG);
+        ErrorF( "Testing %d MB: ", (int)(offset/ONEMEG));
 #endif
         pattern=verite_read_memory32(pRendition->board.vmem_base, offset);
         if (START == pattern) {
